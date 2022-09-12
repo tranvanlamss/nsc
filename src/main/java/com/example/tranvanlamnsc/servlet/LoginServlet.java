@@ -16,11 +16,14 @@ public class LoginServlet extends HttpServlet {
         UserDao dao = new UserDao();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User user = dao.getUser(username, password);
+        String user = dao.getUser(username, password);
 
         if (user != null) {
-            response.sendRedirect("index.jsp");
+            PrintWriter out = response.getWriter();
+            out.append(user.toString());
         }else {
+            PrintWriter out = response.getWriter();
+            out.append("error");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
